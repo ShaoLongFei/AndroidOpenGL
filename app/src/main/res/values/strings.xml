@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">MyOpenGLDemo</string>
+
+    <string name="crash_toast_text">很抱歉发生了崩溃</string>
+    <string name="crash_dialog_title">崩溃报告</string>
+    <string name="crash_toast_text2">哦！我崩溃了，但我已经向我的开发者们发送错误报告，他们会尽快解决这个问题。</string>
+    <string name="crash_dialog_text">一个意外的错误导致了程序的崩溃，请发送错误数据以帮助我们来解决这个问题,您所要做的就是点击OK</string>
+    <string name="crash_dialog_comment_prompt">你可以在下方写出你的建议和想法</string>
+    <string name="crash_dialog_ok_toast">非常感谢</string>
 </resources>

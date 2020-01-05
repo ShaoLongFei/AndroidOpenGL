@@ -25,13 +25,26 @@ public class BaseActivity extends AppCompatActivity {
         myGlSurfaceView=new MyGlSurfaceView(this);
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        myGlSurfaceView.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        myGlSurfaceView.onResume();
+    }
+
+
     public void setRender(GLSurfaceView.Renderer renderer){
         myGlSurfaceView.setRenderer(renderer);
         myGlSurfaceView.setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
         setContentView(myGlSurfaceView);
     }
 
-    protected int loadShader(int type, String shaderCode){
+    protected static int loadShader(int type, String shaderCode){
         int shader= GLES20.glCreateShader(type);
         GLES20.glShaderSource(shader,shaderCode);
         GLES20.glCompileShader(shader);
@@ -56,9 +69,9 @@ public class BaseActivity extends AppCompatActivity {
         return intBuffer;
     }
 
-    protected FloatBuffer getFloatBuffer(float[] arr){
+    protected static FloatBuffer getFloatBuffer(float[] arr){
         FloatBuffer floatBuffer;
-        ByteBuffer byteBuffer=ByteBuffer.allocateDirect(arr.length*4);
+        ByteBuffer byteBuffer = ByteBuffer.allocateDirect(arr.length*4);
         byteBuffer.order(ByteOrder.nativeOrder());
         floatBuffer=byteBuffer.asFloatBuffer();
         floatBuffer.put(arr);
@@ -76,7 +89,7 @@ public class BaseActivity extends AppCompatActivity {
         return shortBuffer;
     }
 
-    protected int creatProgramAndLink(int mProgram,int vertexShader,int fragmentShader){
+    protected static int creatProgramAndLink(int mProgram, int vertexShader, int fragmentShader){
         mProgram = GLES20.glCreateProgram();
         GLES20.glAttachShader(mProgram, vertexShader);
         GLES20.glAttachShader(mProgram, fragmentShader);
@@ -84,7 +97,7 @@ public class BaseActivity extends AppCompatActivity {
         return mProgram;
     }
 
-    protected boolean checkLinkState(int mProgram){
+    protected static boolean checkLinkState(int mProgram){
         int[] linkStatus = new int[1];
         GLES20.glGetProgramiv(mProgram, GLES20.GL_LINK_STATUS, linkStatus, 0);
         if (linkStatus[0] != GLES20.GL_TRUE) {

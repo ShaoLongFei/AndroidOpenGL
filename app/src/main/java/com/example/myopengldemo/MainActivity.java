@@ -1,5 +1,6 @@
 package com.example.myopengldemo;
 
+import android.util.Log;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -15,6 +16,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -35,8 +37,10 @@ public class MainActivity extends AppCompatActivity {
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent=new Intent(MainActivity.this,mArrayList.get(i).clazz);
-                startActivity(intent);
+//                Intent intent=new Intent(MainActivity.this,mArrayList.get(i).clazz);
+//                startActivity(intent);
+                List list = new ArrayList();
+                Log.e("hahah", "outOfBounds: " + list.get(1));
             }
         });
     }
@@ -49,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
         add("可旋转的彩色正三角形",RotateTriangleActivity.class);
         add("正方形",SquareActivity.class);
         add("圆形",OvalActvity.class);
+        add("正方体",CubeActivity.class);
     }
 
     private void add(String name, Class<?> clazz) {
