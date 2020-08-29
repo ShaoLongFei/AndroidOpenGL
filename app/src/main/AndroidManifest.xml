@@ -18,14 +18,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".TriangleActivity"/>
-        <activity android:name=".RegularTriangleActivity"/>
-        <activity android:name=".TriangleColorFullActivity"/>
-        <activity android:name=".SquareActivity"/>
-        <activity android:name=".RotateTriangleActivity"/>
-        <activity android:name=".OvalActvity"/>
+        <activity android:name=".TriangleActivity" />
+        <activity android:name=".RegularTriangleActivity" />
+        <activity android:name=".TriangleColorFullActivity" />
+        <activity android:name=".SquareActivity" />
+        <activity android:name=".RotateTriangleActivity" />
+        <activity android:name=".OvalActvity" />
+        <activity android:name=".CubeActivity" />
+        <activity android:name=".ConeActivity" />
     </application>
 
-    <uses-feature android:glEsVersion="0x00020000" android:required="true"/>
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true" />
 
 </manifest>

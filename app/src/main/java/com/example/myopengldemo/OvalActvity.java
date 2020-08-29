@@ -91,17 +91,27 @@ public class OvalActvity extends BaseActivity {
 
         @Override
         public void onDrawFrame(GL10 gl10) {
+            // 将程序加入到 OpenGLES 2.0 的环境中
             GLES20.glUseProgram(mProgram);
+            // 获取变换矩阵 vMatrix 的句柄
             mMatrixHandler = GLES20.glGetUniformLocation(mProgram, "vMatrix");
+            // 指定 vMatrix 的值
             GLES20.glUniformMatrix4fv(mMatrixHandler, 1, false, mMVPMatrix, 0);
+            // 获取顶点着色器 vPosition 的句柄
             mPostionHandle = GLES20.glGetAttribLocation(mProgram, "vPosition");
+            // 启动三角形顶点的句柄
             GLES20.glEnableVertexAttribArray(mPostionHandle);
+            // 准备三角形的坐标数据
             GLES20.glVertexAttribPointer(mPostionHandle, COORDS_PER_VERTEX,
                     GLES20.GL_FLOAT, false,
                     vertexStride, vertexBuffer);
+            // 获取片元着色器 vColor 的句柄
             mColorHandle = GLES20.glGetUniformLocation(mProgram, "vColor");
+            // 设置绘制三角形的颜色
             GLES20.glUniform4fv(mColorHandle, 1, color, 0);
+            // 绘制三角形
             GLES20.glDrawArrays(GLES20.GL_TRIANGLE_FAN, 0, shapePos.length / 3);
+            // 禁止顶点数组的句柄
             GLES20.glDisableVertexAttribArray(mPostionHandle);
         }
 
@@ -118,6 +128,9 @@ public class OvalActvity extends BaseActivity {
                 shapePos[i] = data.get(i);
             }
         }
-    }
 
+        public void setMatrix(float[] matrix){
+            this.mMVPMatrix=matrix;
+        }
+    }
 }
