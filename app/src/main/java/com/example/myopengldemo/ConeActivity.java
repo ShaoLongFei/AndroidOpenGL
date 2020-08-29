@@ -36,6 +36,7 @@ public class ConeActivity extends BaseActivity {
 
         private OvalActvity.OvalRender mOvalRender;
         private FloatBuffer vertexBuffer;
+        private FloatBuffer colorBuffer;
 
         private float[] mViewMatrix = new float[16];
         private float[] mProjectMatrix = new float[16];
@@ -44,7 +45,7 @@ public class ConeActivity extends BaseActivity {
         private int n = 360;
         private float height = 2.0f;
         private float radius = 1.0f;
-        private float[] colors = {1.0f,0.0f,0.0f,1.0f};
+        private float[] colors = {1.0f,1.0f,0.0f,1.0f};
 
         private int vSize;
 
@@ -65,18 +66,14 @@ public class ConeActivity extends BaseActivity {
                 d[i] = pos.get(i);
             }
             vSize = d.length / 3;
-            ByteBuffer buffer = ByteBuffer.allocateDirect(d.length * 4);
-            buffer.order(ByteOrder.nativeOrder());
-            vertexBuffer = buffer.asFloatBuffer();
-            vertexBuffer.put(d);
-            vertexBuffer.position(0);
+            vertexBuffer = getFloatBuffer(d);
+            colorBuffer = getFloatBuffer(colors);
         }
 
         @Override
         public void onSurfaceCreated(GL10 gl10, EGLConfig eglConfig) {
             GLES20.glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
             GLES20.glEnable(GLES20.GL_DEPTH_TEST);
-            //这块瞎写的 等会看一下
             mProgram = ShaderUtils.createProgram(getResources(), "vshader/Cone.sh", "fshader/Cone.sh");
             mOvalRender.onSurfaceCreated(gl10, eglConfig);
         }
@@ -98,18 +95,21 @@ public class ConeActivity extends BaseActivity {
         public void onDrawFrame(GL10 gl10) {
             GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT | GLES20.GL_DEPTH_BUFFER_BIT);
             GLES20.glUseProgram(mProgram);
-            Log.e("wuwang","mProgram:"+mProgram);
+
             int mMatrix = GLES20.glGetUniformLocation(mProgram, "vMatrix");
             GLES20.glUniformMatrix4fv(mMatrix, 1, false, mMVPMatrix, 0);
+
             int mPositionHandle = GLES20.glGetAttribLocation(mProgram, "vPosition");
-            Log.e("wuwang","Get Position:"+mPositionHandle);
             GLES20.glEnableVertexAttribArray(mPositionHandle);
             GLES20.glVertexAttribPointer(mPositionHandle, 3, GLES20.GL_FLOAT, false, 0, vertexBuffer);
-            int mColorHandle=GLES20.glGetUniformLocation(mProgram,"vColor");
+
+            int mColorHandle = GLES20.glGetAttribLocation(mProgram, "aColor");
             GLES20.glEnableVertexAttribArray(mColorHandle);
-            GLES20.glUniform4fv(mColorHandle,1,colors,0);
+            GLES20.glVertexAttribPointer(mColorHandle, 4, GLES20.GL_FLOAT, false, 0, colorBuffer);
+
             GLES20.glDrawArrays(GLES20.GL_TRIANGLE_FAN, 0, vSize);
             GLES20.glDisableVertexAttribArray(mPositionHandle);
+            GLES20.glDisableVertexAttribArray(mColorHandle);
             mOvalRender.setMatrix(mMVPMatrix);
             mOvalRender.onDrawFrame(gl10);
         }
