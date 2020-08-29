@@ -32,51 +32,51 @@ public class CubeActivity extends BaseActivity {
         private ShortBuffer indexBuffer;
         private final String vertexShaderCode =
                 "attribute vec4 vPosition;" +
-                        "uniform mat4 vMatrix;"+
-                        "varying  vec4 vColor;"+
-                        "attribute vec4 aColor;"+
-                        "void main() {" +
-                        "  gl_Position = vMatrix*vPosition;" +
-                        "  vColor=aColor;"+
-                        "}";
+                "uniform mat4 vMatrix;"+
+                "varying  vec4 vColor;"+
+                "attribute vec4 aColor;"+
+                "void main() {" +
+                "  gl_Position = vMatrix*vPosition;" +
+                "  vColor=aColor;"+
+                "}";
 
         private final String fragmentShaderCode =
                 "precision mediump float;" +
-                        "varying vec4 vColor;" +
-                        "void main() {" +
-                        "  gl_FragColor = vColor;" +
-                        "}";
+                "varying vec4 vColor;" +
+                "void main() {" +
+                "  gl_FragColor = vColor;" +
+                "}";
 
         private int mProgram;
 
         final float cubePositions[] = {
-                -1.0f,1.0f,1.0f,
-                -1.0f,-1.0f,1.0f,
-                1.0f,-1.0f,1.0f,
-                1.0f,1.0f,1.0f,
-                -1.0f,1.0f,-1.0f,
-                -1.0f,-1.0f,-1.0f,
-                1.0f,-1.0f,-1.0f,
-                1.0f,1.0f,-1.0f,
+                -1.0f, 1.0f, 1.0f,
+                -1.0f, -1.0f, 1.0f,
+                1.0f, -1.0f, 1.0f,
+                1.0f, 1.0f, 1.0f,
+                -1.0f, 1.0f, -1.0f,
+                -1.0f, -1.0f, -1.0f,
+                1.0f, -1.0f, -1.0f,
+                1.0f, 1.0f, -1.0f,
         };
-        final short index[]={
-                6,7,4,6,4,5,    //后面
-                6,3,7,6,2,3,    //右面
-                6,5,1,6,1,2,    //下面
-                0,3,2,0,2,1,    //正面
-                0,1,5,0,5,4,    //左面
-                0,7,3,0,4,7,    //上面
+        final short index[] = {
+                6, 7, 4, 6, 4, 5,    //后面
+                6, 3, 7, 6, 2, 3,    //右面
+                6, 5, 1, 6, 1, 2,    //下面
+                0, 3, 2, 0, 2, 1,    //正面
+                0, 1, 5, 0, 5, 4,    //左面
+                0, 7, 3, 0, 4, 7,    //上面
         };
 
         float color[] = {
-                0f,1f,0f,1f,
-                0f,1f,0f,1f,
-                0f,1f,0f,1f,
-                0f,1f,0f,1f,
-                1f,0f,0f,1f,
-                1f,0f,0f,1f,
-                1f,0f,0f,1f,
-                1f,0f,0f,1f,
+                0f, 1f, 0f, 1f,
+                0f, 1f, 0f, 1f,
+                0f, 1f, 0f, 1f,
+                0f, 1f, 0f, 1f,
+                1f, 0f, 0f, 1f,
+                1f, 0f, 0f, 1f,
+                1f, 0f, 0f, 1f,
+                1f, 0f, 0f, 1f,
         };
         private int mPositionHandle;
         private int mColorHandle;

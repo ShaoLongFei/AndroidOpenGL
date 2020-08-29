@@ -1,6 +1,7 @@
 package com.example.myopengldemo;
 
 import android.util.Log;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -32,51 +33,51 @@ public class MainActivity extends AppCompatActivity {
 
     private void init() {
         initData();
-        mListView=findViewById(R.id.list);
+        mListView = findViewById(R.id.list);
         mListView.setAdapter(new MyAdapter());
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent=new Intent(MainActivity.this,mArrayList.get(i).clazz);
+                Intent intent = new Intent(MainActivity.this, mArrayList.get(i).clazz);
                 startActivity(intent);
             }
         });
     }
 
     private void initData() {
-        mArrayList=new ArrayList<>();
-        add("三角形",TriangleActivity.class);
-        add("正三角形",RegularTriangleActivity.class);
-        add("彩色正三角形",TriangleColorFullActivity.class);
-        add("可旋转的彩色正三角形",RotateTriangleActivity.class);
-        add("正方形",SquareActivity.class);
-        add("圆形",OvalActvity.class);
-        add("正方体",CubeActivity.class);
+        mArrayList = new ArrayList<>();
+        add("三角形", TriangleActivity.class);
+        add("正三角形", RegularTriangleActivity.class);
+        add("彩色正三角形", TriangleColorFullActivity.class);
+        add("可旋转的彩色正三角形", RotateTriangleActivity.class);
+        add("正方形", SquareActivity.class);
+        add("圆形", OvalActvity.class);
+        add("正方体", CubeActivity.class);
     }
 
     private void add(String name, Class<?> clazz) {
-        Shape shape=new Shape(name,clazz);
+        Shape shape = new Shape(name, clazz);
         mArrayList.add(shape);
     }
 
     public void btSquare(View view) {
-        startActivity(new Intent(this,SquareActivity.class));
+        startActivity(new Intent(this, SquareActivity.class));
     }
 
     public void btTriangle(View view) {
-        startActivity(new Intent(this,TriangleActivity.class));
+        startActivity(new Intent(this, TriangleActivity.class));
     }
 
     public void btRegularTriangle(View view) {
-        startActivity(new Intent(this,RegularTriangleActivity.class));
+        startActivity(new Intent(this, RegularTriangleActivity.class));
     }
 
     public void btTriangleColorFull(View view) {
-        startActivity(new Intent(this,TriangleColorFullActivity.class));
+        startActivity(new Intent(this, TriangleColorFullActivity.class));
     }
 
     public void btRotateTriangle(View view) {
-        startActivity(new Intent(this,RotateTriangleActivity.class));
+        startActivity(new Intent(this, RotateTriangleActivity.class));
     }
 
     private class Shape {
@@ -108,21 +109,23 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public View getView(int i, View view, ViewGroup viewGroup) {
-            if (view==null){
-                view=LayoutInflater.from(viewGroup.getContext()).inflate(android.R.layout.simple_list_item_1, viewGroup, false);
+            if (view == null) {
+                view = LayoutInflater.from(viewGroup.getContext()).inflate(android.R.layout.simple_list_item_1, viewGroup, false);
                 view.setTag(new ViewHolder(view));
             }
-            ViewHolder holder=(ViewHolder)view.getTag();
+            ViewHolder holder = (ViewHolder) view.getTag();
             holder.setShape(mArrayList.get(i));
             return view;
         }
 
-        private class ViewHolder{
+        private class ViewHolder {
             private TextView mName;
-            private ViewHolder(View parent){
-                mName=parent.findViewById(android.R.id.text1);
+
+            private ViewHolder(View parent) {
+                mName = parent.findViewById(android.R.id.text1);
             }
-            public void setShape(Shape shape){
+
+            public void setShape(Shape shape) {
                 mName.setText(shape.name);
             }
         }

@@ -19,6 +19,9 @@ import java.nio.FloatBuffer;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
+/**
+ * @author shaolongfei
+ */
 public class RotateTriangleActivity extends AppCompatActivity {
 
     @Override
@@ -145,18 +148,36 @@ public class RotateTriangleActivity extends AppCompatActivity {
     }
 
     private class Triangle {
-        RotateTriangleRender rotateTriangleRender = new RotateTriangleRender();
 
-        private final String vertexShaderCode = "attribute vec4 vPosition;" + "uniform mat4 uMVPMatrix;" + "varying vec4 vColor;" + "attribute vec4 aColor;" + "void main(){" + "   gl_Position=uMVPMatrix*vPosition;" + "   vColor=aColor;" + "}";
-        private final String fragmentShaderCode = "precision mediump float;" + "varying vec4 vColor;" + "void main(){" + "   gl_FragColor=vColor;" + "}";
+        private final String vertexShaderCode =
+                "attribute vec4 vPosition;" +
+                "uniform mat4 uMVPMatrix;" +
+                "varying vec4 vColor;" +
+                "attribute vec4 aColor;" +
+                "void main(){" +
+                "   gl_Position=uMVPMatrix*vPosition;" +
+                "   vColor=aColor;" +
+                "}";
+        private final String fragmentShaderCode =
+                "precision mediump float;" +
+                "varying vec4 vColor;" +
+                "void main(){" +
+                "   gl_FragColor=vColor;" +
+                "}";
         private int mProgram;
         private FloatBuffer vertexBuffer, colorBuffer;
         private int mMVPMatrixHandle;
 
         private final int COORDS_PER_VERTEX = 3;
-        private float triangleCoords[] = {0.0f, 0.622008459f, 0.0f, -0.5f, -0.311004243f, 0.0f, 0.5f, -0.311004243f, 0.0f};
+        private float triangleCoords[] = {
+                0.0f, 0.577f, 0.0f,
+                -0.5f, -0.288f, 0.0f,
+                0.5f, -0.288f, 0.0f};
 
-        private float color[] = {1.0f, 0f, 0f, 1.0f, 0f, 1.0f, 0f, 1.0f, 0f, 0f, 1.0f, 1.0f};
+        private float color[] = {
+                1.0f, 0f, 0f, 1.0f,
+                0f, 1.0f, 0f, 1.0f,
+                0f, 0f, 1.0f, 1.0f};
 
         private int mPositionHandle;
         private int mColorHandle;

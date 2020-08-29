@@ -73,7 +73,7 @@ public class ConeActivity extends BaseActivity {
         @Override
         public void onSurfaceChanged(GL10 gl10, int i, int i1) {
             GLES20.glEnable(GLES20.GL_DEPTH_TEST);
-            //这款瞎写的 等会看一下
+            //这块瞎写的 等会看一下
             mProgram = ShaderUtils.createProgram(Resources.getSystem(), "vshader/Cone.sh", "fshader/Cone.sh");
         }
 
