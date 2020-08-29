@@ -37,10 +37,8 @@ public class MainActivity extends AppCompatActivity {
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                Intent intent=new Intent(MainActivity.this,mArrayList.get(i).clazz);
-//                startActivity(intent);
-                List list = new ArrayList();
-                Log.e("hahah", "outOfBounds: " + list.get(1));
+                Intent intent=new Intent(MainActivity.this,mArrayList.get(i).clazz);
+                startActivity(intent);
             }
         });
     }
