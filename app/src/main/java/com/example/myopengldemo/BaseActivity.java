@@ -60,7 +60,7 @@ public class BaseActivity extends AppCompatActivity {
         return shader;
     }
 
-    protected IntBuffer getIntBuffer(int[] arr) {
+    protected static IntBuffer getIntBuffer(int[] arr) {
         IntBuffer intBuffer;
         ByteBuffer byteBuffer = ByteBuffer.allocateDirect(arr.length * 4);
         byteBuffer.order(ByteOrder.nativeOrder());
@@ -80,7 +80,7 @@ public class BaseActivity extends AppCompatActivity {
         return floatBuffer;
     }
 
-    protected ShortBuffer getShortBuffer(short[] arr) {
+    protected static ShortBuffer getShortBuffer(short[] arr) {
         ShortBuffer shortBuffer;
         ByteBuffer byteBuffer = ByteBuffer.allocateDirect(arr.length * 2);
         byteBuffer.order(ByteOrder.nativeOrder());

@@ -89,7 +89,8 @@ public class RegularTriangleActivity extends BaseActivity {
             // 设置投影矩阵
             Matrix.frustumM(mProjectMatrix, 0, -ratio, ratio, -1, 1, 3, 7);
             // 设置相机位置
-            Matrix.setLookAtM(mViewMatrix, 0, 0, 0, 7.0f, 0f, 0f, 0f, 0f, 1.0f, 0.0f);
+            Matrix.setLookAtM(mViewMatrix, 0, 0, 0, 7.0f, 0f,
+                    0f, 0f, 0f, 1.0f, 0.0f);
             // 计算变换矩阵
             Matrix.multiplyMM(mMVPMatri, 0, mProjectMatrix, 0, mViewMatrix, 0);
         }

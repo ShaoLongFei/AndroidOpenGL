@@ -60,32 +60,44 @@ public class OvalActvity extends BaseActivity {
         private int mMatrixHandler;
 
         private float radius = 1.0f;
-        private int n = 360;
+        private int n = 360; // 切割份数
 
         private float[] shapePos;
         private float height = 0.0f;
 
+        // 设置颜色，依次为红绿蓝和透明通道
         private float[] color = {1.0f, 1.0f, 1.0f, 1.0f};
 
+        OvalRender() {
+            this(0.0f);
+        }
+
+        OvalRender(float height) {
+            this.height = height;
+            createPositions();
+        }
 
         @Override
         public void onSurfaceCreated(GL10 gl10, EGLConfig eglConfig) {
-            createPositions();
             vertexBuffer = getFloatBuffer(shapePos);
+
             int vertexShader = loadShader(GLES20.GL_VERTEX_SHADER, vertexShaderCode);
             int fragmentShader = loadShader(GLES20.GL_FRAGMENT_SHADER, fragmentShaderCode);
+
             mProgram = creatProgramAndLink(vertexShader, fragmentShader);
-            if (!checkLinkState(mProgram)) {
-                Log.e("ES20_ERROR", "Could not link program: ");
-                Log.e("ES20_ERROR", GLES20.glGetProgramInfoLog(mProgram));
-            }
+            checkLinkState(mProgram);
         }
 
         @Override
         public void onSurfaceChanged(GL10 gl10, int width, int height) {
+            // 计算宽高比
             float ratio = (float) width / height;
+            // 设置透视投影
             Matrix.frustumM(mProjectMatrix, 0, -ratio, ratio, -1, 1, 3, 7);
-            Matrix.setLookAtM(mViewMatrix, 0, 0, 0, 7.0f, 0f, 0f, 0f, 0f, 1.0f, 0.0f);
+            // 设置相机位置
+            Matrix.setLookAtM(mViewMatrix, 0, 0, 0, 7.0f, 0f,
+                    0f, 0f, 0f, 1.0f, 0.0f);
+            // 计算变换矩阵
             Matrix.multiplyMM(mMVPMatrix, 0, mProjectMatrix, 0, mViewMatrix, 0);
         }
 
@@ -117,6 +129,10 @@ public class OvalActvity extends BaseActivity {
 
         private void createPositions() {
             ArrayList<Float> data = new ArrayList<>();
+            // 设置圆心坐标
+            data.add(0.0f);
+            data.add(0.0f);
+            data.add(height);
             float angDegSpan = 360 / n;
             for (float i = 0; i < 360; i += angDegSpan) {
                 data.add((float) (radius * Math.sin(i * Math.PI / 180f)));
