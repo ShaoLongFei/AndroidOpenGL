@@ -74,7 +74,7 @@ public class OvalActvity extends BaseActivity {
             vertexBuffer = getFloatBuffer(shapePos);
             int vertexShader = loadShader(GLES20.GL_VERTEX_SHADER, vertexShaderCode);
             int fragmentShader = loadShader(GLES20.GL_FRAGMENT_SHADER, fragmentShaderCode);
-            mProgram = creatProgramAndLink(mProgram, vertexShader, fragmentShader);
+            mProgram = creatProgramAndLink(vertexShader, fragmentShader);
             if (!checkLinkState(mProgram)) {
                 Log.e("ES20_ERROR", "Could not link program: ");
                 Log.e("ES20_ERROR", GLES20.glGetProgramInfoLog(mProgram));

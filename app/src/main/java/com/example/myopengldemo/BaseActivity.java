@@ -90,12 +90,17 @@ public class BaseActivity extends AppCompatActivity {
         return shortBuffer;
     }
 
-    protected static int creatProgramAndLink(int mProgram, int vertexShader, int fragmentShader) {
-        mProgram = GLES20.glCreateProgram();
-        GLES20.glAttachShader(mProgram, vertexShader);
-        GLES20.glAttachShader(mProgram, fragmentShader);
-        GLES20.glLinkProgram(mProgram);
-        return mProgram;
+    protected static int creatProgramAndLink(int vertexShader, int fragmentShader) {
+        int program;
+        // 创建一个空的OpenGLES程序
+        program = GLES20.glCreateProgram();
+        // 将顶点着色器加入到程序
+        GLES20.glAttachShader(program, vertexShader);
+        // 将片元着色器加入到程序中
+        GLES20.glAttachShader(program, fragmentShader);
+        // 连接到着色器程序
+        GLES20.glLinkProgram(program);
+        return program;
     }
 
     protected static boolean checkLinkState(int mProgram) {
@@ -103,6 +108,7 @@ public class BaseActivity extends AppCompatActivity {
         GLES20.glGetProgramiv(mProgram, GLES20.GL_LINK_STATUS, linkStatus, 0);
         if (linkStatus[0] != GLES20.GL_TRUE) {
             GLES20.glDeleteProgram(mProgram);
+            Log.e("ES20_ERROR", "Could not link program: \n" + GLES20.glGetProgramInfoLog(mProgram));
             return false;
         }
         return true;

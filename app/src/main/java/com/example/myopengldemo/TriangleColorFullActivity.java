@@ -4,12 +4,9 @@ import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import android.opengl.Matrix;
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.annotation.Nullable;
 
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 
 import javax.microedition.khronos.egl.EGLConfig;
@@ -66,7 +63,7 @@ public class TriangleColorFullActivity extends BaseActivity {
 
         private int mMatrixHandler;
 
-        private float[] color = {
+        private float[] colors = {
                 0.0f, 1.0f, 0.0f, 1.0f,
                 1.0f, 0.0f, 0.0f, 1.0f,
                 0.0f, 0.0f, 1.0f, 1.0f
@@ -74,55 +71,52 @@ public class TriangleColorFullActivity extends BaseActivity {
 
         @Override
         public void onSurfaceCreated(GL10 gl10, EGLConfig eglConfig) {
-            ByteBuffer byteBuffer = ByteBuffer.allocateDirect(trigleCoords.length * 4);
-            byteBuffer.order(ByteOrder.nativeOrder());
-            vertexBuffer = byteBuffer.asFloatBuffer();
-            vertexBuffer.put(trigleCoords);
-            vertexBuffer.position(0);
-            ByteBuffer byteBuffer1 = ByteBuffer.allocateDirect(color.length * 4);
-            byteBuffer1.order(ByteOrder.nativeOrder());
-            colorBuffer = byteBuffer1.asFloatBuffer();
-            colorBuffer.put(color);
-            colorBuffer.position(0);
+            vertexBuffer = getFloatBuffer(trigleCoords);
+            colorBuffer = getFloatBuffer(colors);
 
             int vertexShader = loadShader(GLES20.GL_VERTEX_SHADER, vertexShaderCode);
             int fragmentShader = loadShader(GLES20.GL_FRAGMENT_SHADER, fragmentShaderCode);
 
-            mProgram = GLES20.glCreateProgram();
-            GLES20.glAttachShader(mProgram, vertexShader);
-            GLES20.glAttachShader(mProgram, fragmentShader);
-            GLES20.glLinkProgram(mProgram);
-            int[] linkStatus = new int[1];
-            GLES20.glGetProgramiv(mProgram, GLES20.GL_LINK_STATUS, linkStatus, 0);
-            if (linkStatus[0] != GLES20.GL_TRUE) {
-                Log.e("ES20_ERROR", "Could not link program: ");
-                Log.e("ES20_ERROR", GLES20.glGetProgramInfoLog(mProgram));
-                GLES20.glDeleteProgram(mProgram);
-                mProgram = 0;
-            }
+            mProgram = creatProgramAndLink(vertexShader, fragmentShader);
+            checkLinkState(mProgram);
         }
 
         @Override
         public void onSurfaceChanged(GL10 gl10, int width, int height) {
+            // 计算宽高比
             float ratio = (float) width / height;
+            // 设置透视投影
             Matrix.frustumM(mProjectMatrix, 0, -ratio, ratio, -1, 1, 3, 7);
+            // 设置相机位置
             Matrix.setLookAtM(mViewMatrix, 0, 0, 0, 7.0f, 0f, 0f, 0f, 0f, 1.0f, 0.0f);
+            // 计算变换矩阵
             Matrix.multiplyMM(mMVPMatrix, 0, mProjectMatrix, 0, mViewMatrix, 0);
         }
 
         @Override
         public void onDrawFrame(GL10 gl10) {
             GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT | GLES20.GL_DEPTH_BUFFER_BIT);
+            // 将程序加入到 OpenGLES2.0 环境
             GLES20.glUseProgram(mProgram);
+            // 获取变换矩阵 vMatrix 成员句柄
             mMatrixHandler = GLES20.glGetUniformLocation(mProgram, "vMatrix");
+            // 指定 vMatrix 的值
             GLES20.glUniformMatrix4fv(mMatrixHandler, 1, false, mMVPMatrix, 0);
+            // 获取顶点着色器的 vPosition 成员句柄
             mPositionHandle = GLES20.glGetAttribLocation(mProgram, "vPosition");
+            // 启用三角形顶点的句柄
             GLES20.glEnableVertexAttribArray(mPositionHandle);
+            // 准备三角形的坐标数据
             GLES20.glVertexAttribPointer(mPositionHandle, COORDS_PER_VERTEX, GLES20.GL_FLOAT, false, vertexStride, vertexBuffer);
+            // 获取片元着色器的 vColor 成员的句柄
             mColorHandle = GLES20.glGetAttribLocation(mProgram, "aColor");
+            // 启用片元着色器的句柄
             GLES20.glEnableVertexAttribArray(mColorHandle);
+            // 为片元着色器填充颜色数据
             GLES20.glVertexAttribPointer(mColorHandle, 4, GLES20.GL_FLOAT, false, 0, colorBuffer);
+            // 绘制三角形
             GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, vertexCount);
+            // 禁止顶点数组的句柄
             GLES20.glDisableVertexAttribArray(mPositionHandle);
         }
     }

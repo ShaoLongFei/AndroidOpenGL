@@ -66,18 +66,8 @@ public class TriangleActivity extends BaseActivity {
             vertexBuffer.position(0);
             int vertexShader = loadShader(GLES20.GL_VERTEX_SHADER, vertexShaderCode);
             int fragmentShader = loadShader(GLES20.GL_FRAGMENT_SHADER, fragmentShaderCode);
-            mProgram = GLES20.glCreateProgram();
-            GLES20.glAttachShader(mProgram, vertexShader);
-            GLES20.glAttachShader(mProgram, fragmentShader);
-            GLES20.glLinkProgram(mProgram);
-            int[] linkStatus = new int[1];
-            GLES20.glGetProgramiv(mProgram, GLES20.GL_LINK_STATUS, linkStatus, 0);
-            if (linkStatus[0] != GLES20.GL_TRUE) {
-                Log.e("ES20_ERROR", "Could not link program: ");
-                Log.e("ES20_ERROR", GLES20.glGetProgramInfoLog(mProgram));
-                GLES20.glDeleteProgram(mProgram);
-                mProgram = 0;
-            }
+            mProgram = creatProgramAndLink(vertexShader,fragmentShader);
+            checkLinkState(mProgram);
         }
 
         @Override
@@ -88,13 +78,21 @@ public class TriangleActivity extends BaseActivity {
         @Override
         public void onDrawFrame(GL10 gl10) {
             GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT | GLES20.GL_DEPTH_BUFFER_BIT);
+            // 将程序加入到 OpenGLES2.0 环境
             GLES20.glUseProgram(mProgram);
+            // 获取顶点着色器的 vPosition 成员句柄
             mPositionHandle = GLES20.glGetAttribLocation(mProgram, "vPosition");
+            // 启用三角形顶点的句柄
             GLES20.glEnableVertexAttribArray(mPositionHandle);
+            // 准备三角形的坐标数据
             GLES20.glVertexAttribPointer(mPositionHandle, COORDS_PER_VERTEX, GLES20.GL_FLOAT, false, vertexStride, vertexBuffer);
+            // 获取片元着色器的 vColor 成员的句柄
             mColorHandle = GLES20.glGetUniformLocation(mProgram, "vColor");
+            // 设置绘制三角形的颜色
             GLES20.glUniform4fv(mColorHandle, 1, color, 0);
+            // 绘制三角形
             GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, vertexCount);
+            // 禁用顶点数组的句柄
             GLES20.glDisableVertexAttribArray(mPositionHandle);
         }
     }
