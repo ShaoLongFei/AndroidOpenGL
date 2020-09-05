@@ -1,16 +1,16 @@
-package com.example.myopengldemo;
+package com.example.myopengldemo.shape;
 
-import android.content.res.Resources;
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import android.opengl.Matrix;
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.annotation.Nullable;
 
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
+import com.example.myopengldemo.base.BaseActivity;
+import com.example.myopengldemo.utils.BufferUtils;
+import com.example.myopengldemo.utils.OpenGLUtils;
+
 import java.nio.FloatBuffer;
 import java.util.ArrayList;
 
@@ -66,15 +66,15 @@ public class ConeActivity extends BaseActivity {
                 d[i] = pos.get(i);
             }
             vSize = d.length / 3;
-            vertexBuffer = getFloatBuffer(d);
-            colorBuffer = getFloatBuffer(colors);
+            vertexBuffer = BufferUtils.getFloatBuffer(d);
+            colorBuffer = BufferUtils.getFloatBuffer(colors);
         }
 
         @Override
         public void onSurfaceCreated(GL10 gl10, EGLConfig eglConfig) {
             GLES20.glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
             GLES20.glEnable(GLES20.GL_DEPTH_TEST);
-            mProgram = ShaderUtils.createProgram(getResources(), "vshader/Cone.sh", "fshader/Cone.sh");
+            mProgram = OpenGLUtils.createProgramAndLink(getResources(), "vshader/Cone.sh", "fshader/Cone.sh");
             mOvalRender.onSurfaceCreated(gl10, eglConfig);
         }
 

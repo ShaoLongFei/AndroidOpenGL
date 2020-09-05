@@ -1,4 +1,4 @@
-package com.example.myopengldemo;
+package com.example.myopengldemo.shape;
 
 import android.content.Context;
 import android.opengl.GLES20;
@@ -11,6 +11,9 @@ import android.view.MotionEvent;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.myopengldemo.utils.BufferUtils;
+import com.example.myopengldemo.utils.OpenGLUtils;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -186,33 +189,10 @@ public class RotateTriangleActivity extends AppCompatActivity {
         private final int vertexStride = COORDS_PER_VERTEX * 4;
 
         public Triangle() {
-            ByteBuffer byteBuffer = ByteBuffer.allocateDirect(triangleCoords.length * 4);
-            byteBuffer.order(ByteOrder.nativeOrder());
-            vertexBuffer = byteBuffer.asFloatBuffer();
-            vertexBuffer.put(triangleCoords);
-            vertexBuffer.position(0);
+            vertexBuffer = BufferUtils.getFloatBuffer(triangleCoords);
+            colorBuffer = BufferUtils.getFloatBuffer(color);
 
-            ByteBuffer byteBuffer1 = ByteBuffer.allocateDirect(color.length * 4);
-            byteBuffer1.order(ByteOrder.nativeOrder());
-            colorBuffer = byteBuffer1.asFloatBuffer();
-            colorBuffer.put(color);
-            colorBuffer.position(0);
-
-            int vertexShader = loadShader(GLES20.GL_VERTEX_SHADER, vertexShaderCode);
-            int fragmentShader = loadShader(GLES20.GL_FRAGMENT_SHADER, fragmentShaderCode);
-
-            mProgram = GLES20.glCreateProgram();
-            GLES20.glAttachShader(mProgram, vertexShader);
-            GLES20.glAttachShader(mProgram, fragmentShader);
-            GLES20.glLinkProgram(mProgram);
-            int[] linkStatus = new int[1];
-            GLES20.glGetProgramiv(mProgram, GLES20.GL_LINK_STATUS, linkStatus, 0);
-            if (linkStatus[0] != GLES20.GL_TRUE) {
-                Log.e("ES20_ERROR", "Could not link program: ");
-                Log.e("ES20_ERROR", GLES20.glGetProgramInfoLog(mProgram));
-                GLES20.glDeleteProgram(mProgram);
-                mProgram = 0;
-            }
+            mProgram = OpenGLUtils.createProgramAndLink(vertexShaderCode, fragmentShaderCode);
         }
 
         public void draw(float[] mvpMatrix) {

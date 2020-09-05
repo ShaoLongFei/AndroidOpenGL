@@ -18,17 +18,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".TriangleActivity" />
-        <activity android:name=".RegularTriangleActivity" />
-        <activity android:name=".TriangleColorFullActivity" />
-        <activity android:name=".SquareActivity" />
-        <activity android:name=".RotateTriangleActivity" />
-        <activity android:name=".OvalActvity" />
-        <activity android:name=".CubeActivity" />
-        <activity android:name=".ConeActivity" />
-        <activity android:name=".CylinderActivity" />
-        <activity android:name=".BallActivity" />
-        <activity android:name=".BallWithLightActivity" />
+        <activity android:name=".shape.TriangleActivity" />
+        <activity android:name=".shape.RegularTriangleActivity" />
+        <activity android:name=".shape.TriangleColorFullActivity" />
+        <activity android:name=".shape.SquareActivity" />
+        <activity android:name=".shape.RotateTriangleActivity" />
+        <activity android:name=".shape.OvalActvity" />
+        <activity android:name=".shape.CubeActivity" />
+        <activity android:name=".shape.ConeActivity" />
+        <activity android:name=".shape.CylinderActivity" />
+        <activity android:name=".shape.BallActivity" />
+        <activity android:name=".shape.BallWithLightActivity" />
     </application>
 
     <uses-feature

@@ -1,4 +1,4 @@
-package com.example.myopengldemo;
+package com.example.myopengldemo.shape;
 
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
@@ -6,6 +6,10 @@ import android.opengl.Matrix;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
+
+import com.example.myopengldemo.base.BaseActivity;
+import com.example.myopengldemo.utils.BufferUtils;
+import com.example.myopengldemo.utils.OpenGLUtils;
 
 import java.nio.FloatBuffer;
 import java.nio.ShortBuffer;
@@ -90,13 +94,10 @@ public class CubeActivity extends BaseActivity {
         @Override
         public void onSurfaceCreated(GL10 gl10, EGLConfig eglConfig) {
             GLES20.glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
-            vertexBuffer = getFloatBuffer(cubePositions);
-            colorBuffer = getFloatBuffer(color);
-            indexBuffer = getShortBuffer(index);
-            int vertexShader = loadShader(GLES20.GL_VERTEX_SHADER, vertexShaderCode);
-            int fragmentShader = loadShader(GLES20.GL_FRAGMENT_SHADER, fragmentShaderCode);
-            mProgram = creatProgramAndLink(vertexShader, fragmentShader);
-            checkLinkState(mProgram);
+            vertexBuffer = BufferUtils.getFloatBuffer(cubePositions);
+            colorBuffer = BufferUtils.getFloatBuffer(color);
+            indexBuffer = BufferUtils.getShortBuffer(index);
+            mProgram = OpenGLUtils.createProgramAndLink(vertexShaderCode, fragmentShaderCode);
             // 开启深度测试
             GLES20.glEnable(GLES20.GL_DEPTH_TEST);
         }

@@ -1,15 +1,16 @@
-package com.example.myopengldemo;
+package com.example.myopengldemo.shape;
 
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import android.opengl.Matrix;
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.annotation.Nullable;
 
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
+import com.example.myopengldemo.base.BaseActivity;
+import com.example.myopengldemo.utils.BufferUtils;
+import com.example.myopengldemo.utils.OpenGLUtils;
+
 import java.nio.FloatBuffer;
 import java.nio.ShortBuffer;
 
@@ -73,14 +74,10 @@ public class SquareActivity extends BaseActivity {
         public void onSurfaceCreated(GL10 gl10, EGLConfig eglConfig) {
             GLES20.glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
 
-            vertexBuffer = getFloatBuffer(squareCoords);
-            indexBuffer = getShortBuffer(index);
+            vertexBuffer = BufferUtils.getFloatBuffer(squareCoords);
+            indexBuffer = BufferUtils.getShortBuffer(index);
 
-            int vertexShader = loadShader(GLES20.GL_VERTEX_SHADER, vertexShaderCode);
-            int fragmentShader = loadShader(GLES20.GL_FRAGMENT_SHADER, fragmentShaderCode);
-
-            mProgram = creatProgramAndLink(vertexShader, fragmentShader);
-            checkLinkState(mProgram);
+            mProgram = OpenGLUtils.createProgramAndLink(vertexShaderCode, fragmentShaderCode);
         }
 
         @Override

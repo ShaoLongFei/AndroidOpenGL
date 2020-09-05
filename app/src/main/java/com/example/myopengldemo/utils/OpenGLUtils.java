@@ -1,4 +1,4 @@
-package com.example.myopengldemo;
+package com.example.myopengldemo.utils;
 
 import android.content.res.Resources;
 import android.opengl.GLES20;
@@ -11,18 +11,18 @@ import java.io.InputStream;
  * @创建时间 2019-08-06 15:01
  * @描述
  */
-public class ShaderUtils {
+public class OpenGLUtils {
 
     private static final String TAG = "ShaderUtils";
 
-    private ShaderUtils() {
+    private OpenGLUtils() {
     }
 
-    public static int createProgram(Resources resources, String vertexRes, String fragmentRes) {
-        return createProgram(loadFromAssetsFile(vertexRes, resources), loadFromAssetsFile(fragmentRes, resources));
+    public static int createProgramAndLink(Resources resources, String vertexRes, String fragmentRes) {
+        return createProgramAndLink(loadFromAssetsFile(vertexRes, resources), loadFromAssetsFile(fragmentRes, resources));
     }
 
-    public static int createProgram(String vertexSource, String fragmentSource) {
+    public static int createProgramAndLink(String vertexSource, String fragmentSource) {
         int vertex = loadShader(GLES20.GL_VERTEX_SHADER, vertexSource);
         if (vertex == 0) {
             return 0;
@@ -31,6 +31,10 @@ public class ShaderUtils {
         if (fragment == 0) {
             return 0;
         }
+        return createProgramAndLink(vertex, fragment);
+    }
+
+    public static int createProgramAndLink(int vertex, int fragment) {
         int program = GLES20.glCreateProgram();
         if (program != 0) {
             GLES20.glAttachShader(program, vertex);

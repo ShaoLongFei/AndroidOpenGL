@@ -12,6 +12,18 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.myopengldemo.shape.BallActivity;
+import com.example.myopengldemo.shape.BallWithLightActivity;
+import com.example.myopengldemo.shape.ConeActivity;
+import com.example.myopengldemo.shape.CubeActivity;
+import com.example.myopengldemo.shape.CylinderActivity;
+import com.example.myopengldemo.shape.OvalActvity;
+import com.example.myopengldemo.shape.RegularTriangleActivity;
+import com.example.myopengldemo.shape.RotateTriangleActivity;
+import com.example.myopengldemo.shape.SquareActivity;
+import com.example.myopengldemo.shape.TriangleActivity;
+import com.example.myopengldemo.shape.TriangleColorFullActivity;
+
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {

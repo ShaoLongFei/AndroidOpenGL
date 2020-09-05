@@ -1,14 +1,15 @@
-package com.example.myopengldemo;
+package com.example.myopengldemo.shape;
 
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.annotation.Nullable;
 
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
+import com.example.myopengldemo.base.BaseActivity;
+import com.example.myopengldemo.utils.BufferUtils;
+import com.example.myopengldemo.utils.OpenGLUtils;
+
 import java.nio.FloatBuffer;
 
 import javax.microedition.khronos.egl.EGLConfig;
@@ -59,15 +60,8 @@ public class TriangleActivity extends BaseActivity {
         @Override
         public void onSurfaceCreated(GL10 gl10, EGLConfig eglConfig) {
             GLES20.glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
-            ByteBuffer byteBuffer = ByteBuffer.allocateDirect(triangleCoords.length * 4);
-            byteBuffer.order(ByteOrder.nativeOrder());
-            vertexBuffer = byteBuffer.asFloatBuffer();
-            vertexBuffer.put(triangleCoords);
-            vertexBuffer.position(0);
-            int vertexShader = loadShader(GLES20.GL_VERTEX_SHADER, vertexShaderCode);
-            int fragmentShader = loadShader(GLES20.GL_FRAGMENT_SHADER, fragmentShaderCode);
-            mProgram = creatProgramAndLink(vertexShader,fragmentShader);
-            checkLinkState(mProgram);
+            vertexBuffer = BufferUtils.getFloatBuffer(triangleCoords);
+            mProgram = OpenGLUtils.createProgramAndLink(vertexShaderCode,fragmentShaderCode);
         }
 
         @Override

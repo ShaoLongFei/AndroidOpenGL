@@ -1,4 +1,4 @@
-package com.example.myopengldemo;
+package com.example.myopengldemo.shape;
 
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
@@ -6,6 +6,10 @@ import android.opengl.Matrix;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
+
+import com.example.myopengldemo.base.BaseActivity;
+import com.example.myopengldemo.utils.BufferUtils;
+import com.example.myopengldemo.utils.OpenGLUtils;
 
 import java.nio.FloatBuffer;
 import java.util.ArrayList;
@@ -63,14 +67,14 @@ public class CylinderActivity extends BaseActivity {
             }
             vSize = d.length / 3;
 
-            vertexBuffer = getFloatBuffer(d);
+            vertexBuffer = BufferUtils.getFloatBuffer(d);
         }
 
         @Override
         public void onSurfaceCreated(GL10 gl, EGLConfig config) {
             GLES20.glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
             GLES20.glEnable(GLES20.GL_DEPTH_TEST);
-            mProgram = ShaderUtils.createProgram(getResources(), "vshader/Cone.sh", "fshader/Cone.sh");
+            mProgram = OpenGLUtils.createProgramAndLink(getResources(), "vshader/Cone.sh", "fshader/Cone.sh");
             mBottomOval.onSurfaceCreated(gl, config);
             mTopOval.onSurfaceCreated(gl, config);
         }
