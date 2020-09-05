@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
         add("正方体", CubeActivity.class);
         add("圆锥", ConeActivity.class);
         add("圆柱", CylinderActivity.class);
+        add("球体", BallActivity.class);
     }
 
     private void add(String name, Class<?> clazz) {

@@ -4,7 +4,6 @@ import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import android.opengl.Matrix;
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.annotation.Nullable;
 

@@ -27,6 +27,7 @@
         <activity android:name=".CubeActivity" />
         <activity android:name=".ConeActivity" />
         <activity android:name=".CylinderActivity" />
+        <activity android:name=".BallActivity" />
     </application>
 
     <uses-feature
