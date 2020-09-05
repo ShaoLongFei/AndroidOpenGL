@@ -1,23 +1,18 @@
 package com.example.myopengldemo;
 
-import android.util.Log;
-
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -56,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
         add("圆锥", ConeActivity.class);
         add("圆柱", CylinderActivity.class);
         add("球体", BallActivity.class);
+        add("带光源的球体", BallWithLightActivity.class);
     }
 
     private void add(String name, Class<?> clazz) {

@@ -28,6 +28,7 @@
         <activity android:name=".ConeActivity" />
         <activity android:name=".CylinderActivity" />
         <activity android:name=".BallActivity" />
+        <activity android:name=".BallWithLightActivity" />
     </application>
 
     <uses-feature
